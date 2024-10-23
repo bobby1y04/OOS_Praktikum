@@ -133,6 +133,10 @@ abstract class Transaction implements CalculateBill{
                 && this.getDescription().equals(other.getDescription());
     }
 
+    /**
+     * Computes the amount of money for the transaction.
+     * @return The computed amount of money for the transaction.
+     */
     @Override
     public double calculate() {
         return this.getAmount();

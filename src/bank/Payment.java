@@ -5,11 +5,19 @@ package bank;// bank.Payment.java
  * It extends the Transaction class and adds incoming and outgoing interest for deposits and withdrawals.
  * @author Bobby Ly
  */
-public class Payment extends Transaction implements CalculateBill{
+public class Payment extends Transaction {
 
 
-    private double incomingInterest;       // Zinsen, die bei einer Einzahlung ("Deposit") anfallen
-    private double outgoingInterest;       // Zinsen, die bei einer Auszahlung ("Withdrawal") anfallen
+    /**
+     * The incoming interest that has to be added to the amount of
+     * money for the transaction when depositing money.
+     */
+    private double incomingInterest;
+    /**
+     * The outgoing interest that has to be added to the amount of
+     * money for the transaction when withdrawing money.
+     */
+    private double outgoingInterest;
 
 
     /**

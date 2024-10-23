@@ -11,7 +11,7 @@ public class Main {
 
     public static void test_functionalities() {
         Transfer t1 = new Transfer("23.03.2004", 500, "Alles Gute zum Geburtstag!", "Bobby", "Alice");
-        Transfer t2 = t1;
+        Transfer t1_copy = t1;
         Transfer t3 = new Transfer("23.03.2004", 500, "Rückzahlung", "Alice", "Bobby");
 
         Payment p1 = new Payment("15.02.2019", -500, "Klassenfahrt", 0.05, 0.1);
@@ -24,6 +24,7 @@ public class Main {
         System.out.println("Testen der calculate()-Methode:");
         System.out.println("+-------------------------------------------------------------------+\n");
         System.out.println("Berechnung für t1: " + t1.calculate());
+        System.out.println("\nBerechnung für t1_copy: " + t1_copy.calculate());
         System.out.println("\nBerechnung für p1: " + p1.calculate());
         System.out.println("\nBerechnung für p1_copy: " + p1_copy.calculate());
         System.out.println("\nBerechnung für p2: " + p2.calculate());
@@ -32,7 +33,7 @@ public class Main {
         System.out.println("Testen der toString()-Methode:");
         System.out.println("+-------------------------------------------------------------------+\n");
         System.out.println("t1:\n" + t1.toString());
-        System.out.println("t2:\n" + t2.toString());
+        System.out.println("t2:\n" + t1_copy.toString());
         System.out.println("t3:\n" + t3.toString());
         System.out.println("p1:\n" + p1.toString());
         System.out.println("p2:\n" + p1.toString());
@@ -42,7 +43,7 @@ public class Main {
         System.out.println("\n\n\n+-------------------------------------------------------------------+");
         System.out.println("Testen der equals()-Methode:");
         System.out.println("+-------------------------------------------------------------------+\n");
-        System.out.println("t1.equals(t2): " + t1.equals(t2));
+        System.out.println("t1.equals(t2): " + t1.equals(t1_copy));
         System.out.println("t1.equals(t3): " + t1.equals(t3));
         System.out.println("p1.equals(p1_copy): " + p1.equals(p1_copy));
         System.out.println("p1.equals(p2): " + p1.equals(p2));

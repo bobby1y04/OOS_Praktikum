@@ -6,7 +6,7 @@ package bank;// bank.Transfer.java
  *
  * @author Bobby Ly
  */
-public class Transfer extends Transaction implements CalculateBill {
+public class Transfer extends Transaction {
 
     /**
      * The person who sends the money.
@@ -102,19 +102,6 @@ public class Transfer extends Transaction implements CalculateBill {
         return (super.toString()
                 + "Sender: " + this.getSender() + "\n"
                 + "Recipient: " + this.getRecipient() + "\n");
-    }
-
-
-    /**
-     * Computes the correct amount of money for this transfer. As the amount
-     * of money for a transfer is always positive, the original value will be
-     * returned.
-     *
-     * @return The original amount of money for this transfer.
-     */
-    @Override
-    public double calculate() {
-        return this.getAmount();
     }
 
     /**
