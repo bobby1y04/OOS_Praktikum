@@ -44,8 +44,6 @@ public class Payment extends Transaction {
         this.setOutgoingInterest(other.getOutgoingInterest());
     }
 
-    // Test
-
 
     /**
      * Gets the incoming interest.
