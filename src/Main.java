@@ -47,6 +47,7 @@ public class Main {
         System.out.println("t1.equals(t3): " + t1.equals(t3));
         System.out.println("p1.equals(p1_copy): " + p1.equals(p1_copy));
         System.out.println("p1.equals(p2): " + p1.equals(p2));
+        System.out.println("p1.equals(t1): " + p1.equals(t1));
     }
 
 }

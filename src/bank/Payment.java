@@ -103,15 +103,6 @@ public class Payment extends Transaction {
         return (super.getAmount() >= 0 ? (super.getAmount()-(super.getAmount()*this.getIncomingInterest())) : (super.getAmount()+(super.getAmount()*this.getOutgoingInterest())));
     }
 
-    /**
-     * Gets the amount of money for this Payment.
-     *
-     * @return The amount of money for this Payment.
-     */
-    @Override
-    public double getAmount() {
-        return this.calculate();
-    }
 
 
     /**

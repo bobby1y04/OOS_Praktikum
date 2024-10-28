@@ -6,7 +6,7 @@ package bank;// bank.Transaction.java
  *
  * @author Bobby Ly
  */
-abstract class Transaction implements CalculateBill{
+abstract class Transaction implements CalculateBill {
 
     private String date;    //  date of transaction in the form: DD.MM.YYYY
     private double amount;   //  amount of the transaction (when transferring money, it's always >= 0)
@@ -98,7 +98,7 @@ abstract class Transaction implements CalculateBill{
     public String toString() {
         return (
                 "Date: " + this.getDate() + "\n"
-                        + "Amount: " + this.getAmount() + "\n"
+                        + "Amount: " + this.calculate() + "\n"
                         + "Description: " + this.getDescription() + "\n"
         );
     }
@@ -132,15 +132,7 @@ abstract class Transaction implements CalculateBill{
                 && this.getDate().equals(other.getDate())
                 && this.getDescription().equals(other.getDescription());
     }
-
-    /**
-     * Computes the amount of money for the transaction.
-     * @return The computed amount of money for the transaction.
-     */
-    @Override
-    public double calculate() {
-        return this.getAmount();
-    }
-
 }
+
+
 

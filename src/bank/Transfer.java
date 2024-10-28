@@ -104,15 +104,6 @@ public class Transfer extends Transaction {
                 + "Recipient: " + this.getRecipient() + "\n");
     }
 
-    /**
-     * Gets the amount of money for this transfer.
-     *
-     * @return The amount of money for this transfer.
-     */
-    @Override
-    public double getAmount() {
-        return super.getAmount();
-    }
 
     /**
      * Checks whether the object in the parameter list is equal to this Transfer object.
@@ -135,4 +126,16 @@ public class Transfer extends Transaction {
         );
     }
 
+    /**
+     * Computes the amount of money for the transaction.
+     * @return The computed amount of money for the transaction.
+     */
+    @Override
+    public double calculate() {
+        return this.getAmount();
+    }
+
+
 }
+
+
