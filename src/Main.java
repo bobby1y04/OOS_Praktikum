@@ -6,7 +6,7 @@ import bank.*;  // Importiere das Paket in die Main-Klasse
 
 public class Main {
     public static void main(String[] args) {
-      test_functionalities();
+        test_functionalities();
     }
 
     public static void test_functionalities() {
@@ -48,6 +48,7 @@ public class Main {
         System.out.println("p1.equals(p1_copy): " + p1.equals(p1_copy));
         System.out.println("p1.equals(p2): " + p1.equals(p2));
         System.out.println("p1.equals(t1): " + p1.equals(t1));
-    }
+        System.out.println("p1.equals(null): " + p1.equals(null));
 
+    }
 }
