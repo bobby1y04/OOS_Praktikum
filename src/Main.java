@@ -90,6 +90,7 @@ public class Main {
                 System.out.println("AccountAlreadyExistsException: ");
                 privateBank.createAccount("Bobby Ly");
             } catch (AccountAlreadyExistsException e) {
+                // e.printStackTrace(System.err);
                 System.out.println(e.getMessage());
             }
 
