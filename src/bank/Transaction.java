@@ -1,12 +1,14 @@
 package bank;// bank.Transaction.java
 
+import bank.exceptions.TransactionAttributeException;
+
 /**
  * The Transaction class represents a money transaction with
  * a date, a certain amount of money and a description.
  *
  * @author Bobby Ly
  */
-abstract class Transaction implements CalculateBill {
+public abstract class Transaction implements CalculateBill {
 
     private String date;    //  date of transaction in the form: DD.MM.YYYY
     private double amount;   //  amount of the transaction (when transferring money, it's always >= 0)
@@ -19,7 +21,7 @@ abstract class Transaction implements CalculateBill {
      * @param amount      The amount of money for the transaction.
      * @param description The description of the transaction.
      */
-    public Transaction(String date, double amount, String description) {
+    public Transaction(String date, double amount, String description) throws TransactionAttributeException {
         this.setDate(date);
         this.setAmount(amount);
         this.setDescription(description);
@@ -30,7 +32,7 @@ abstract class Transaction implements CalculateBill {
      *
      * @param other The other Transaction object to be copied.
      */
-    public Transaction(Transaction other) {
+    public Transaction(Transaction other) throws TransactionAttributeException {
         this.setDate(other.getDate());
         this.setAmount(other.getAmount());
         this.setDescription(other.getDescription());
@@ -68,7 +70,7 @@ abstract class Transaction implements CalculateBill {
      *
      * @param val The new amount of money of the transaction.
      */
-    public void setAmount(double val) {
+    public void setAmount(double val) throws TransactionAttributeException {
         amount = val;
     }
 

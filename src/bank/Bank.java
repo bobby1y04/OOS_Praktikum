@@ -29,7 +29,7 @@ public interface Bank {
      * @throws TransactionAttributeException    if the validation check for certain attributes fail
      */
     void createAccount(String account, List<Transaction> transactions)
-            throws AccountAlreadyExistsException, TransactionAlreadyExistException, TransactionAttributeException;
+            throws AccountAlreadyExistsException, TransactionAlreadyExistException, TransactionAttributeException, AccountDoesNotExistException;
 
     /**
      * Adds a transaction to an already existing account.

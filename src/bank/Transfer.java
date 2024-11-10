@@ -1,5 +1,7 @@
 package bank;// bank.Transfer.java
 
+import bank.exceptions.TransactionAttributeException;
+
 /**
  * The Transfer class represents a money transfer between two people.
  * It extends the Transaction class and adds a sender and a recipient.
@@ -19,6 +21,17 @@ public class Transfer extends Transaction {
 
 
     /**
+     * Konstruktor, der ein neues Objekt mit den Attributen date, amound und description erzeugt
+     * @param date Zeitpunkt einer Überweisung
+     * @param amount Geldmenge einer Überweisung
+     * @param description Beschreibung der Überweisung
+     * @throws TransactionAttributeException
+     */
+    public Transfer(String date, double amount, String description) throws TransactionAttributeException {
+        super(date, amount, description);
+    }
+
+    /**
      * Constructor with specific parameters
      *
      * @param date        The date of the transfer.
@@ -27,7 +40,7 @@ public class Transfer extends Transaction {
      * @param sender      The person who sends the money.
      * @param recipient   The person who receives the money.
      */
-    public Transfer(String date, double amount, String description, String sender, String recipient) {
+    public Transfer(String date, double amount, String description, String sender, String recipient) throws TransactionAttributeException {
         super(date, amount, description);
         this.setSender(sender);
         this.setRecipient(recipient);
@@ -38,7 +51,7 @@ public class Transfer extends Transaction {
      *
      * @param other The other Transfer object to be copied.
      */
-    public Transfer(Transfer other) {
+    public Transfer(Transfer other) throws TransactionAttributeException {
         super(other);
         this.setSender(other.getSender());
         this.setRecipient(other.getRecipient());
@@ -87,8 +100,8 @@ public class Transfer extends Transaction {
      * @param val The new amount of money for the transfer (must be positive)
      */
     @Override
-    public void setAmount(double val) {
-        if (val < 0) System.out.println("Error: Transfer amount must be positive.");
+    public void setAmount(double val) throws TransactionAttributeException {
+        if (val < 0) throw new TransactionAttributeException("Der zu sendene Betrag muss positiv sein!");
         else super.setAmount(val);
     }
 

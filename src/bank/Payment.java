@@ -1,5 +1,7 @@
 package bank;// bank.Payment.java
 
+import bank.exceptions.TransactionAttributeException;
+
 /**
  * The Payment class represents a money-payment with incoming and outgoing interest.
  * It extends the Transaction class and adds incoming and outgoing interest for deposits and withdrawals.
@@ -28,7 +30,7 @@ public class Payment extends Transaction {
      * @param incomingInterest The incoming interest for the payment.
      * @param outgoingInterest The outgoing interest for the payment.
      */
-    public Payment(String date, double amount, String description, double incomingInterest, double outgoingInterest) {
+    public Payment(String date, double amount, String description, double incomingInterest, double outgoingInterest) throws TransactionAttributeException {
         super(date, amount, description);
         this.setIncomingInterest(incomingInterest); // Initialisierung + Überprüfung des Wertes
         this.setOutgoingInterest(outgoingInterest); // Initialisierung + Überprüfung des Wertes
@@ -38,7 +40,7 @@ public class Payment extends Transaction {
      * Copy constructor for creating a copy of another Payment object.
      * @param other The other Payment object to be copied.
      */
-    public Payment(Payment other) {
+    public Payment(Payment other) throws TransactionAttributeException {
         super(other);
         this.setIncomingInterest(other.getIncomingInterest());
         this.setOutgoingInterest(other.getOutgoingInterest());
