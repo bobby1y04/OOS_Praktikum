@@ -63,7 +63,7 @@ public class Main {
             System.out.println("\n\n+-+-+-+-+-+-+-+-+-+-+-+-+- Test: Hinzufügen und Löschen einer Transaktion +-+-+-+-+-+-+-+-+-+-+-+-+-\n");
             privateBank.addTransaction("Bobby Ly", new Transfer("10.10.2023", 1000, "Bonus1", "Bonusprogramm", "Bobby Ly"));
             System.out.println("Transaktion hinzugefügt!");
-            privateBank.addTransaction("Bobby Ly", new Transfer("11.10.2023", 500, "Bonus2", "Bonusprogramm", "Bobby Ly"));
+            privateBank.addTransaction("Bobby Ly", new Transfer("11.10.2023", 500, "Bonusrückzahlung", "Bobby Ly", "Bonusprogramm"));
             System.out.println("Transaktion hinzugefügt!");
             privateBank.addTransaction("Bobby Ly", new Payment("11.10.2023", -700, "Miete", 0.05, 0.02));
             System.out.println("Transaktion hinzugefügt!");
