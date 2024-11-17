@@ -10,6 +10,8 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         test_functionalities();
+
+
     }
 
     public static void test_functionalities() {

@@ -30,7 +30,7 @@ public class PrivateBank implements Bank{
      * Transaktionen verknüpfen, sodass jedem gespeicherten Konto 0 bis n Transaktionen zugeordnet
      * werden können. Der Schlüssel steht für den Namen des Kontos.
      */
-    protected Map<String, List<Transaction>> accountsToTransactions = new HashMap<>();
+    protected Map<String, List<Transaction>> accountsToTransactions = new HashMap<>(); // Hashmap implementiert das Interface Map
 
     // Getter und Setter
     /**
@@ -201,12 +201,7 @@ public class PrivateBank implements Bank{
         payment.setIncomingInterest(this.getIncomingInterest());
         payment.setOutgoingInterest(this.getOutgoingInterest());
     }
-    if (transaction instanceof Transfer) {
-        Transfer transfer = (Transfer) transaction;
-        if (transfer.getAmount() < 0) {
-            throw new TransactionAttributeException("Der zu sendene Betrag darf nicht kleiner als 0 sein!");
-        }
-    }
+
     accountsToTransactions.get(account).add(transaction);
     }
 
@@ -245,13 +240,7 @@ public class PrivateBank implements Bank{
         if (!accountsToTransactions.containsKey(account)) {
             return false;
         }
-    // falls das Konto existiert, wird nach der angegebenen Transaktion gesucht
-    for (Transaction t : accountsToTransactions.get(account)) {
-        if (t.equals(transaction)) {
-            return true;
-        }
-    }
-    return false;
+    return accountsToTransactions.get(account).contains(transaction);
     }
 
     /**
