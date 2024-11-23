@@ -59,9 +59,9 @@ public class Payment extends Transaction {
      * Sets the incoming interest.
      * @param val The new incoming interest (0-1)
      */
-    public void setIncomingInterest(double val) {
+    public void setIncomingInterest(double val) throws TransactionAttributeException {
         if (val >= 0 && val <= 1) this.incomingInterest = val;
-        else System.out.println("Error: Value for incoming interest must be between 0 and 1.");
+        else throw new TransactionAttributeException("Error: Value for incoming interest must be between 0 and 1.");
     }
 
     /**
@@ -76,9 +76,9 @@ public class Payment extends Transaction {
      * Sets the outgoing interest.
      * @param val The new outgoing interest (0-1)
      */
-    public void setOutgoingInterest(double val) {
+    public void setOutgoingInterest(double val) throws TransactionAttributeException {
         if (val >= 0 && val <= 1) this.outgoingInterest = val;
-        else System.out.println("Error: Value for outgoing interest must be between 0 and 1.");
+        else throw new TransactionAttributeException("Error: Value for outgoing interest must be between 0 and 1.");
     }
 
     /**

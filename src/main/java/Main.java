@@ -15,7 +15,12 @@ public class Main {
     }
 
     public static void test_functionalities() {
-        try {
+
+    }
+
+    /*
+     * Praktikum 3
+     *   try {
 
             System.out.println("\n\n+-+-+-+-+-+-+-+-+-+-+-+-+- ANLEGEN VON KONTEN +-+-+-+-+-+-+-+-+-+-+-+-+-\n");
             // Erzeugen eines PrivateBank- und PrivateBankAlt-Objektes
@@ -137,7 +142,7 @@ public class Main {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    }
+     */
 }
 
 

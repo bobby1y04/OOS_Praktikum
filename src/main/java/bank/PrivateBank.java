@@ -1,7 +1,11 @@
 package bank;
 
 import bank.exceptions.*;
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.*;
+import java.lang.reflect.Type;
 import java.util.*;
 
 /**
@@ -32,7 +36,24 @@ public class PrivateBank implements Bank{
      */
     protected Map<String, List<Transaction>> accountsToTransactions = new HashMap<>(); // Hashmap implementiert das Interface Map
 
+    /*
+     * Dieses Attribut gibt den Speicherort (ein spezieller Ordner im Dateisystem, relativer oder absoluter Pfad)
+     * der Konten bzw. Transaktionen an.
+     */
+    private String directoryName;
+
+
+
+
     // Getter und Setter
+    public void setDirectoryName(String val) {
+        this.directoryName = val;
+    }
+
+    public String getDirectoryName() {
+        return this.directoryName;
+    }
+
     /**
      * Gibt den Namen der privaten Bank zurück
      * @return Name der privaten Bank
@@ -86,10 +107,18 @@ public class PrivateBank implements Bank{
      * @param incomingInterest Zinsen, die bei einer Einzahlung anfallen
      * @param outgoingInterest Zinsen, die bei einer Auszahlung anfallen
      */
-    public PrivateBank(String name, double incomingInterest, double outgoingInterest) {
+    public PrivateBank(String name, double incomingInterest, double outgoingInterest, String directoryName) {
         this.setName(name);
         this.setIncomingInterest(incomingInterest);
         this.setOutgoingInterest(outgoingInterest);
+        this.setDirectoryName(directoryName);
+
+        // P4: Im Konstruktor aufgerufen, um sicherzustellen, dass beim Erstellen eines PrivateBank-Objekts alle gespeicherten Konten und Transaktionen aus den JSON-Dateien geladen werden
+        try {
+            readAccounts();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -100,6 +129,14 @@ public class PrivateBank implements Bank{
         this.setName(other.getName());
         this.setIncomingInterest(other.getIncomingInterest());
         this.setOutgoingInterest(other.getOutgoingInterest());
+        this.setDirectoryName(other.getDirectoryName());
+
+        // P4: Im Konstruktor aufgerufen, um sicherzustellen, dass beim Erstellen eines PrivateBank-Objekts alle gespeicherten Konten und Transaktionen aus den JSON-Dateien geladen werden
+        try {
+            readAccounts();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -138,6 +175,100 @@ public class PrivateBank implements Bank{
     // Methoden-Implementierungen des Interfaces Bank
 
     /**
+     * Schreibt alle Transaktionen eines Kontos in eine JSON-Datei.
+     * Die Datei wird im angegebenen Verzeichnis gespeichert und mit dem Kontonamen benannt.
+     *
+     * @param account Der Name des Kontos, dessen Transaktionen gespeichert werden sollen.
+     * @throws IOException Wenn ein Fehler beim Schreiben in die Datei auftritt.
+     */
+    private void writeAccount(String account) throws IOException {
+        try {
+            // Erstellen eines FileWriter-Objekts:
+            // Öffnet/erstellt eine .json-Datei im angegebenen Verzeichnis und überschreibt sie, falls sie bereits existiert.
+            FileWriter fileWriter = new FileWriter(getDirectoryName() + account + ".json");
+
+            // Erstellen einer Gson-Instanz mit benutzerdefinierten Einstellungen:
+            // - Pretty-Printing: Formatiert die JSON-Ausgabe lesbar mit Einrückungen und Zeilenumbrüchen.
+            // - Registrierung eines benutzerdefinierten Serialisierers/Deserialisierers für die Klasse Transaction.
+            Gson gson = new GsonBuilder()
+                    .setPrettyPrinting() // Aktiviert lesbares JSON-Format
+                    .registerTypeAdapter(Transaction.class, new Serializer()) // Anpassung für Transaction-Objekte
+                    .create();
+
+            // Definiert den Typ der Liste, der gespeichert werden soll (List<Transaction>).
+            // Da Java generische Typen zur Laufzeit löscht, wird TypeToken verwendet, um diese Typinformation bereitzustellen.
+            Type typeList = new TypeToken<List<Transaction>>() {}.getType();
+
+            // Konvertiert die Liste der Transaktionen des angegebenen Kontos in einen JSON-String:
+            // - accountsToTransactions.get(account): Holt die Transaktionsliste des angegebenen Kontos.
+            // - typeList: Gibt an, dass es sich um eine Liste von Transaction-Objekten handelt.
+            String jsonString = gson.toJson(accountsToTransactions.get(account), typeList);
+
+            // Schreibt den JSON-String in die Datei:
+            fileWriter.write(jsonString);
+
+            // Schließt den FileWriter, um Ressourcen freizugeben.
+            fileWriter.close();
+
+        } catch (IOException io) {
+            // Falls ein Fehler auftritt, wird dieser weitergegeben.
+            throw new IOException(io);
+        }
+    }
+
+
+    /**
+     * Liest alle Konten und deren Transaktionen aus JSON-Dateien im angegebenen Verzeichnis
+     * und fügt sie dem Attribut `accountsToTransactions` hinzu.
+     *
+     * @throws IOException falls ein Fehler beim Lesen der Dateien auftritt.
+     */
+    private void readAccounts() throws IOException {
+        // Öffnet das angegebene Verzeichnis, in dem die .json-Dateien gespeichert sind
+        File directory = new File(getDirectoryName());
+
+        // Speichert alle Dateien im Verzeichnis in einem Array vom Typ File
+        File[] listOfFiles = directory.listFiles();
+
+        // Überprüfen, ob das Verzeichnis existiert und Dateien enthält
+        if (listOfFiles == null) {
+            throw new IOException("Das Verzeichnis \"" + getDirectoryName() + "\" existiert nicht oder enthält keine Dateien.");
+        }
+
+        // Erstellen einer Gson-Instanz mit benutzerdefiniertem Serialisierer/Deserialisierer und Pretty-Printing
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Transaction.class, new Serializer()) //  Immer wenn Gson ein Objekt vom Typ Transaction serialisieren oder deserialisieren soll, wird der angegebene Serializer verwendet
+                .setPrettyPrinting() // die generierten JSON-Daten formatiert werden, damit sie besser lesbar sind (mit Einrückungen, neuen Zeilen, etc.)
+                .create(); // konfigurierte Gson-Instanz erstellt.
+
+        // Definiert den Typ der Transaktionen in `List<Transaction>` für die Deserialisierung
+        // Mit der {} erzeugt man eine anonyme Unterklasse von TypeToken, die den Typ List<Transaction> „einschließt“ und sicherstellt, dass Gson diese Information zur Laufzeit erkennen kann.
+        Type transactionListType = new TypeToken<List<Transaction>>() {}.getType();
+
+        // Iteriert über alle Dateien im Verzeichnis
+        for (File file : listOfFiles) {
+            // Überprüfen, ob es sich um eine Datei handelt (keine Unterverzeichnisse)
+            if (file.isFile()) {
+                // Extrahieren des Dateinamens und Entfernen der ".json"-Endung
+                String accountName = file.getName().replace(".json", "");
+
+                // Öffnen der aktuellen Datei für das Lesen
+                try (FileReader reader = new FileReader(file)) {
+                    // Deserialisiert den Inhalt der Datei in eine Liste von `Transaction`-Objekten
+                    List<Transaction> transactions = gson.fromJson(reader, transactionListType);
+
+                    // Verknüpft das Konto (Name der Datei) mit der Liste von Transaktionen
+                    accountsToTransactions.put(accountName, transactions);
+                } catch (IOException e) {
+                    // Fehlerbehandlung für JSON-spezifische Probleme
+                    throw new IOException("Fehler beim Lesen der Datei \"" + file.getName() + "\": " + e.getMessage());
+                }
+            }
+        }
+    }
+
+
+    /**
      * Adds an account to the bank.
      *
      * @param account the account to be added
@@ -152,6 +283,13 @@ public class PrivateBank implements Bank{
             // ansonsten wird das Konto mit einer leeren Transaktionsliste erstellt
             List<Transaction> leereListe = new ArrayList<>();
             accountsToTransactions.put(account, leereListe);
+        }
+
+        // P4: Beim Anlegen eines Accounts, versuchen, dieses direkt zu persistieren
+        try {
+            writeAccount(account);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -172,6 +310,13 @@ public class PrivateBank implements Bank{
         createAccount(account); // Erstmal Konto mit leerer Transaktionsliste anlegen
         for (Transaction t : transactions) {
             this.addTransaction(account, t);
+        }
+
+        // P4: Beim Anlegen eines Accounts, versuchen, dieses direkt zu persistieren
+        try {
+            writeAccount(account);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
 
     }
@@ -203,6 +348,13 @@ public class PrivateBank implements Bank{
     }
 
     accountsToTransactions.get(account).add(transaction);
+
+        // P4: Beim Aktualisieren der Transaktionsliste, versuchen, diese direkt zu persistieren
+        try {
+            writeAccount(account);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 
@@ -226,6 +378,13 @@ public class PrivateBank implements Bank{
 
     // falls keine Exception aufgetreten ist, wird die angegebene Transaktion gelöscht
     accountsToTransactions.get(account).remove(transaction);
+
+        // P4: Beim Aktualisieren der Transaktionsliste, versuchen, diese direkt zu persistieren
+        try {
+            writeAccount(account);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**

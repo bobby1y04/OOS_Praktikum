@@ -1,0 +1,16 @@
+/Users/bobby/02-FH/WiSe24_25/OOS/03-Praktikum/OOS_Praktikum/src/main/java/Main.java
+/Users/bobby/02-FH/WiSe24_25/OOS/03-Praktikum/OOS_Praktikum/src/main/java/bank/Bank.java
+/Users/bobby/02-FH/WiSe24_25/OOS/03-Praktikum/OOS_Praktikum/src/main/java/bank/CalculateBill.java
+/Users/bobby/02-FH/WiSe24_25/OOS/03-Praktikum/OOS_Praktikum/src/main/java/bank/IncomingTransfer.java
+/Users/bobby/02-FH/WiSe24_25/OOS/03-Praktikum/OOS_Praktikum/src/main/java/bank/OutgoingTransfer.java
+/Users/bobby/02-FH/WiSe24_25/OOS/03-Praktikum/OOS_Praktikum/src/main/java/bank/Payment.java
+/Users/bobby/02-FH/WiSe24_25/OOS/03-Praktikum/OOS_Praktikum/src/main/java/bank/PrivateBank.java
+/Users/bobby/02-FH/WiSe24_25/OOS/03-Praktikum/OOS_Praktikum/src/main/java/bank/PrivateBankAlt.java
+/Users/bobby/02-FH/WiSe24_25/OOS/03-Praktikum/OOS_Praktikum/src/main/java/bank/Serializer.java
+/Users/bobby/02-FH/WiSe24_25/OOS/03-Praktikum/OOS_Praktikum/src/main/java/bank/Transaction.java
+/Users/bobby/02-FH/WiSe24_25/OOS/03-Praktikum/OOS_Praktikum/src/main/java/bank/Transfer.java
+/Users/bobby/02-FH/WiSe24_25/OOS/03-Praktikum/OOS_Praktikum/src/main/java/bank/exceptions/AccountAlreadyExistsException.java
+/Users/bobby/02-FH/WiSe24_25/OOS/03-Praktikum/OOS_Praktikum/src/main/java/bank/exceptions/AccountDoesNotExistException.java
+/Users/bobby/02-FH/WiSe24_25/OOS/03-Praktikum/OOS_Praktikum/src/main/java/bank/exceptions/TransactionAlreadyExistException.java
+/Users/bobby/02-FH/WiSe24_25/OOS/03-Praktikum/OOS_Praktikum/src/main/java/bank/exceptions/TransactionAttributeException.java
+/Users/bobby/02-FH/WiSe24_25/OOS/03-Praktikum/OOS_Praktikum/src/main/java/bank/exceptions/TransactionDoesNotExistException.java
