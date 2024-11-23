@@ -1,0 +1,42 @@
+[
+  {
+    "CLASSNAME": "IncomingTransfer",
+    "INSTANCE": {
+      "sender": "Alice",
+      "recipient": "Bob",
+      "date": "23.03.2025",
+      "amount": 500.0,
+      "description": "Alles Gute zum Geburtstag!"
+    }
+  },
+  {
+    "CLASSNAME": "OutgoingTransfer",
+    "INSTANCE": {
+      "sender": "Bob",
+      "recipient": "Alice",
+      "date": "02.01.2025",
+      "amount": 1000.0,
+      "description": "Happy Birthday"
+    }
+  },
+  {
+    "CLASSNAME": "IncomingTransfer",
+    "INSTANCE": {
+      "sender": "AOK",
+      "recipient": "Bob",
+      "date": "10.10.2024",
+      "amount": 10.0,
+      "description": "AOK Prämie"
+    }
+  },
+  {
+    "CLASSNAME": "OutgoingTransfer",
+    "INSTANCE": {
+      "sender": "Bob",
+      "recipient": "Fachhochschule Aachen",
+      "date": "11.06.2025",
+      "amount": 324.0,
+      "description": "Semesterbeitrag"
+    }
+  }
+]
