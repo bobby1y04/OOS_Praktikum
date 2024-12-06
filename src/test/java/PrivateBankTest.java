@@ -46,10 +46,14 @@ public class PrivateBankTest {
         OutgoingTransfer outTransfer = new OutgoingTransfer("02.01.2025", 1000, "Happy Birthday", "Bob", "Alice");
         IncomingTransfer inTransfer2 = new IncomingTransfer("10.10.2024", 10, "AOK Prämie", "AOK", "Bob");
         OutgoingTransfer outTransfer2 = new OutgoingTransfer("11.06.2025", 324, "Semesterbeitrag", "Bob", "Fachhochschule Aachen");
+        Payment payment1 = new Payment("11.06.2025", 350, "Erstes Gehalt", 0.05, 0.02);
+        Payment payment2 = new Payment("11.06.2025", 500, "Zweites Gehalt", 0.05, 0.02);
         list.add(inTransfer);
         list.add(outTransfer);
         list.add(inTransfer2);
         list.add(outTransfer2);
+        list.add(payment1);
+        list.add(payment2);
     }
 
     /**
@@ -86,10 +90,10 @@ public class PrivateBankTest {
             privateBank3 = new PrivateBank(privateBank1);
         });
 
-        assertTrue(privateBank1.equals(privateBank3));
-        assertFalse(privateBank1.equals(privateBank2));
-        assertFalse(privateBank1.equals(null));
-        assertFalse(privateBank2.equals(null));
+        assertEquals(privateBank1, privateBank3);
+        assertNotEquals(privateBank1, privateBank2);
+        assertNotEquals(null, privateBank1);
+        assertNotEquals(null, privateBank2);
     }
 
     /**
@@ -143,21 +147,27 @@ public class PrivateBankTest {
      */
     @Test
     public void testAddTransactions() throws TransactionAttributeException {
-        IncomingTransfer testTransaction = new IncomingTransfer("16.04.2025", 30, "Mathekurs", "Heinz", "Bob");
+        IncomingTransfer testInTransfer = new IncomingTransfer("16.04.2025", 30, "Mathekurs", "Heinz", "Bob");
+        OutgoingTransfer testOutTransfer = new OutgoingTransfer("16.04.2025", 50, "Sommercamp", "Bob", "Trainer");
+        Payment testPayment = new Payment("16.04.2025", 500, "Lohn", 0.05, 0.02);
         assertDoesNotThrow(() -> {
             privateBank1.createAccount("Bob");
-            privateBank1.addTransaction("Bob", testTransaction);
+            privateBank1.addTransaction("Bob", testInTransfer);
+            privateBank1.addTransaction("Bob", testOutTransfer);
+            privateBank1.addTransaction("Bob", testPayment);
         });
 
         List<Transaction> transactions = privateBank1.getTransactions("Bob");
-        assertEquals(1, transactions.size());
-        assertTrue(transactions.contains(testTransaction));
+        assertEquals(3, transactions.size());
+        assertTrue(transactions.contains(testInTransfer));
+        assertTrue(transactions.contains(testOutTransfer));
+        assertTrue(transactions.contains(testPayment));
 
         assertThrows(TransactionAlreadyExistException.class, () -> {
-            privateBank1.addTransaction("Bob", testTransaction);
+            privateBank1.addTransaction("Bob", testInTransfer);
         });
         assertThrows(AccountDoesNotExistException.class, () -> {
-            privateBank1.addTransaction("Alice", testTransaction);
+            privateBank1.addTransaction("Alice", testInTransfer);
         });
     }
 
@@ -213,7 +223,7 @@ public class PrivateBankTest {
     @Test
     public void testGetAccountBalance() throws TransactionAlreadyExistException, AccountAlreadyExistsException, AccountDoesNotExistException, TransactionAttributeException {
         privateBank1.createAccount("Bob", list);
-        assertEquals(privateBank1.getAccountBalance("Bob"), -814.0);
+        assertEquals(privateBank1.getAccountBalance("Bob"), -6.5);
     }
 
     /**

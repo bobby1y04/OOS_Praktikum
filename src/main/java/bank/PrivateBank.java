@@ -168,7 +168,8 @@ public class PrivateBank implements Bank{
         return (this.getName().equals(other.getName()) &&
                 this.getIncomingInterest() == other.getIncomingInterest() &&
                 this.getOutgoingInterest() == other.getOutgoingInterest() &&
-                this.accountsToTransactions.equals(other.accountsToTransactions));
+                this.accountsToTransactions.equals(other.accountsToTransactions)
+        );
     }
 
 
